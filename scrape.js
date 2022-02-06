@@ -8,19 +8,29 @@ const url = 'http://strongerw2ise74v3duebgsvug4mehyhlpa7f6kfwnas7zofs3kov7yd.oni
 
 /* get the html page */
 const request = async url => {
-  const response = await axios({ url, httpAgent: agent });
-  return response.data;
+  try {
+    const response = await axios({ url, httpAgent: agent });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const cheerio = require('cheerio');
 
 const getData = async () => {
   const $ = cheerio.load(await request(url));
-  const siteHeading = $('.col-sm-5');
-  //   console.log(siteHeading.html());
-  console.log(siteHeading.text());
+  getAllTitle($);
 };
 getData();
+
+/* Get all the title */
+const getAllTitle = $ => {
+  $('.col-sm-12').each((i, el) => {
+    const title = $(el).find('.col-sm-5').text();
+    console.log(title);
+  });
+};
 
 // const request = require('request');
 // request(
