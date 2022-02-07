@@ -29,20 +29,13 @@ const getAllPaste = async () => {
     pasteObj.author = getAuthor($, el) ? getAuthor($, el) : 'No Author';
     pasteObj.title = getTitle($, el) ? getTitle($, el) : 'No Title';
     pasteObj.content = await getContent($, el);
+    pasteObj.date = getDate($, el);
     pasteArr.push(pasteObj);
     console.log(pasteArr);
   });
 };
 
 getAllPaste();
-
-const getContent = async ($, el) => {
-  const showPasteURL = $(el).find('.btn').attr('href');
-  if (showPasteURL) {
-    const $paste = cheerio.load(await request(showPasteURL));
-    return $paste('ol').text();
-  }
-};
 
 /* Get the author from paste*/
 const getAuthor = ($, el) => {
@@ -57,4 +50,23 @@ const getTitle = ($, el) => {
     .find('.col-sm-5')
     .text()
     .replace(/\n|\t|\r/g, '');
+};
+
+/* Get the full content from paste*/
+const getContent = async ($, el) => {
+  const showPasteURL = $(el).find('.btn').attr('href');
+  if (showPasteURL) {
+    const $paste = cheerio.load(await request(showPasteURL));
+    return $paste('ol').text();
+  }
+};
+
+const getDate = ($, el) => {
+  const dateDiv = $(el).find('.col-sm-6').first().text();
+  const date = dateDiv
+    .split(' ')
+    .slice(4)
+    .join(' ')
+    .replace(/\n|\t|\r/g, '');
+  return date;
 };
