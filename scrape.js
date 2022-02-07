@@ -24,47 +24,37 @@ const pasteArr = [];
 const getAllPaste = async () => {
   const $ = cheerio.load(await request(url));
 
-  $('.col-sm-12').each((i, el) => {
+  $('.col-sm-12').each(async (i, el) => {
     const pasteObj = {};
+    pasteObj.author = getAuthor($, el) ? getAuthor($, el) : 'No Author';
     pasteObj.title = getTitle($, el) ? getTitle($, el) : 'No Title';
-    pasteObj.author = getAuthor($, el);
+    pasteObj.content = await getContent($, el);
     pasteArr.push(pasteObj);
+    console.log(pasteArr);
   });
-  console.log(pasteArr);
 };
+
 getAllPaste();
 
-/* Get the title from paste*/
+const getContent = async ($, el) => {
+  const showPasteURL = $(el).find('.btn').attr('href');
+  if (showPasteURL) {
+    const $paste = cheerio.load(await request(showPasteURL));
+    return $paste('ol').text();
+  }
+};
+
+/* Get the author from paste*/
 const getAuthor = ($, el) => {
   const authorDiv = $(el).find('.col-sm-6').first().text();
   const author = authorDiv.split(' ')[2];
   return author;
 };
 
+/* Get the title from paste*/
 const getTitle = ($, el) => {
   return $(el)
     .find('.col-sm-5')
     .text()
     .replace(/\n|\t|\r/g, '');
 };
-
-// const request = require('request');
-// request(
-//   'http://strongerw2ise74v3duebgsvug4mehyhlpa7f6kfwnas7zofs3kov7yd.onion/all',
-//   (error, response, html) => {
-//     if (!error && response.statusCode == 200) {
-//       const $ = cheerio.load(html);
-
-//       const siteHeading = $('.links-head');
-
-//       // console.log(siteHeading.html());
-//       // console.log(siteHeading.text());
-//       // const output = siteHeading.find('a').text();
-//       // const output = siteHeading.children('a').text();
-//       const output = siteHeading.children('a').html();
-//       console.log(output);
-//     }
-//     console.log(error);
-//     // console.log(response.statusCode);
-//   }
-// );
