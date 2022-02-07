@@ -1,5 +1,8 @@
+// import cheerio from 'cheerio';
+const cheerio = require('cheerio');
+// import axios from 'axios';
 const axios = require('axios');
-const { get } = require('request');
+// import { SocksProxyAgent } from 'socks-proxy-agent';
 const { SocksProxyAgent } = require('socks-proxy-agent');
 
 const proxy = 'socks5h://127.0.0.1:9050';
@@ -16,20 +19,33 @@ const request = async url => {
   }
 };
 
-const cheerio = require('cheerio');
+const pasteArr = [];
 
-const getData = async () => {
+const getAllPaste = async () => {
   const $ = cheerio.load(await request(url));
-  getAllTitle($);
-};
-getData();
 
-/* Get all the title */
-const getAllTitle = $ => {
   $('.col-sm-12').each((i, el) => {
-    const title = $(el).find('.col-sm-5').text();
-    console.log(title);
+    const pasteObj = {};
+    pasteObj.title = getTitle($, el) ? getTitle($, el) : 'No Title';
+    pasteObj.author = getAuthor($, el);
+    pasteArr.push(pasteObj);
   });
+  console.log(pasteArr);
+};
+getAllPaste();
+
+/* Get the title from paste*/
+const getAuthor = ($, el) => {
+  const authorDiv = $(el).find('.col-sm-6').first().text();
+  const author = authorDiv.split(' ')[2];
+  return author;
+};
+
+const getTitle = ($, el) => {
+  return $(el)
+    .find('.col-sm-5')
+    .text()
+    .replace(/\n|\t|\r/g, '');
 };
 
 // const request = require('request');
