@@ -1,8 +1,5 @@
-// import cheerio from 'cheerio';
 const cheerio = require('cheerio');
-// import axios from 'axios';
 const axios = require('axios');
-// import { SocksProxyAgent } from 'socks-proxy-agent';
 const { SocksProxyAgent } = require('socks-proxy-agent');
 
 const proxy = 'socks5h://127.0.0.1:9050';
@@ -19,10 +16,9 @@ const request = async url => {
   }
 };
 
-const pasteArr = [];
-
 const getAllPaste = async () => {
   const $ = cheerio.load(await request(url));
+  const pasteArr = [];
 
   $('.col-sm-12').each(async (i, el) => {
     const pasteObj = {};
@@ -61,6 +57,7 @@ const getContent = async ($, el) => {
   }
 };
 
+/* Get the date from paste*/
 const getDate = ($, el) => {
   const dateDiv = $(el).find('.col-sm-6').first().text();
   const date = dateDiv
