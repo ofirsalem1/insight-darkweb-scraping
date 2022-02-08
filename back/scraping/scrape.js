@@ -17,21 +17,25 @@ const request = async url => {
 };
 
 const getAllPaste = async () => {
-  const $ = cheerio.load(await request(url));
-  const pasteArr = [];
-
-  $('.col-sm-12').each(async (i, el) => {
-    const pasteObj = {};
-    pasteObj.author = getAuthor($, el) ? getAuthor($, el) : 'No Author';
-    pasteObj.title = getTitle($, el) ? getTitle($, el) : 'No Title';
-    pasteObj.content = await getContent($, el);
-    pasteObj.date = getDate($, el);
-    pasteArr.push(pasteObj);
-    console.log(pasteArr);
-  });
+  try {
+    const $ = cheerio.load(await request(url));
+    const pasteArr = [];
+    // $('.col-sm-12').each(async (i, el) => {
+    const patseDivArr = $('.col-sm-12');
+    for (let el of patseDivArr) {
+      const pasteObj = {};
+      pasteObj.author = getAuthor($, el) ? getAuthor($, el) : 'No Author';
+      pasteObj.title = getTitle($, el) ? getTitle($, el) : 'No Title';
+      pasteObj.content = await getContent($, el);
+      pasteObj.date = getDate($, el);
+      pasteArr.push(pasteObj);
+    }
+    // });
+    return pasteArr;
+  } catch (error) {
+    console.log(error);
+  }
 };
-
-getAllPaste();
 
 /* Get the author from paste*/
 const getAuthor = ($, el) => {
@@ -53,7 +57,9 @@ const getContent = async ($, el) => {
   const showPasteURL = $(el).find('.btn').attr('href');
   if (showPasteURL) {
     const $paste = cheerio.load(await request(showPasteURL));
-    return $paste('ol').text();
+    return $paste('ol')
+      .text()
+      .replace(/\n|\t|\r/g, '');
   }
 };
 
@@ -67,3 +73,5 @@ const getDate = ($, el) => {
     .replace(/\n|\t|\r/g, '');
   return date;
 };
+
+module.exports = { getAllPaste };
