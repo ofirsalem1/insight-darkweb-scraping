@@ -20,10 +20,21 @@ const Details = () => {
       setPastes(pastes => [...pastes, pasteObj]);
     }
   };
-  console.log(pastes);
   return (
     <div>
       <h2>Details</h2>
+      {pastes.map(paste => (
+        <div key={paste.date}>
+          <details>
+            <summary>{paste.title}</summary>
+            <p>{paste.content}</p>
+            <p>
+              {`${paste.author} `}
+              {paste.date}
+            </p>
+          </details>
+        </div>
+      ))}
     </div>
   );
 };
