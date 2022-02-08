@@ -31,6 +31,8 @@ const getAllPaste = async () => {
       pasteArr.push(pasteObj);
     }
     // });
+    pasteArr.pop(); // delete to last element because it is undefined
+    pasteArr.shift(); // delete to first element because it is undefined
     return pasteArr;
   } catch (error) {
     console.log(error);
