@@ -61,7 +61,8 @@ const getContent = async ($, el) => {
     const $paste = cheerio.load(await request(showPasteURL));
     return $paste('ol')
       .text()
-      .replace(/\n|\t|\r/g, '');
+      .replace(/\n|\t|\r/g, '')
+      .replace(/\s+/g, ' ');
   }
 };
 
