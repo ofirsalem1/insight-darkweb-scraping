@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const insertDataRouter = require('./routers/insertDataRouter');
 const getDataRouter = require('./routers/getDataRouter');
+const { insertData } = require('./controllers/insertDataController');
 const mongo = process.env.DATA_BASE;
 
 mongoose
@@ -15,6 +16,8 @@ mongoose
   .catch(err => {
     console.log('error connecting to MongoDB:', err);
   });
+
+setInterval(() => insertData(), 120000);
 
 app.get('/', async (req, res) => {
   res.send('response');
