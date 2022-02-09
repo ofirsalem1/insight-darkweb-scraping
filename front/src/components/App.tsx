@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Details from './Details';
-import Search from './Search';
 import axios from 'axios';
 import { Paste } from '../types/details.types';
+import PrimarySearchAppBar from './PrimarySearchAppBar';
 
 function App() {
   const [pastes, setPastes] = useState<Paste[] | []>([]);
@@ -30,7 +30,7 @@ function App() {
   return (
     <div className="App">
       <h1>SCRAPING</h1>
-      <Search pastes={pastes} setFilteredPastes={setFilteredPastes} />
+      <PrimarySearchAppBar pastes={pastes} setFilteredPastes={setFilteredPastes} />
       <Details pastes={filteredPastes} />
     </div>
   );
