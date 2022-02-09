@@ -20,7 +20,7 @@ export default function ControlledAccordions({ paste }: { paste: Paste }) {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
-          sx={{ background: 'rgba(10, 70, 200, 0.5)' }}
+          sx={{ background: '#1976D2' }}
         >
           <Typography sx={{ width: '33%', flexShrink: 0 }}>{paste.title}</Typography>
           <Typography sx={{ color: 'text.secondary' }}>{paste.author}</Typography>
