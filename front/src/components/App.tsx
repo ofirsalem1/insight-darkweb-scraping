@@ -29,8 +29,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1>SCRAPING</h1>
       <PrimarySearchAppBar pastes={pastes} setFilteredPastes={setFilteredPastes} />
+      <h1>SCRAPING</h1>
       <Details pastes={filteredPastes} />
     </div>
   );
