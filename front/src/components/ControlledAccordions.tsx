@@ -27,9 +27,7 @@ export default function ControlledAccordions({ paste }: { paste: Paste }) {
           <Typography sx={{ margin: '0 auto' }}>{paste.date}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography sx={{ 'word-break': 'keep-all', 'word-wrap': 'break-word' }}>
-            {paste.content}
-          </Typography>
+          <Typography>{paste.content}</Typography>
         </AccordionDetails>
       </Accordion>
     </div>
