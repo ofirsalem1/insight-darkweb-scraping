@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Paste } from '../types/details.types';
+import ControlledAccordions from './ControlledAccordions';
 
 const Details = () => {
   const [pastes, setPastes] = useState<Paste[] | []>([]);
@@ -24,16 +25,17 @@ const Details = () => {
     <div>
       <h2>Details</h2>
       {pastes.map(paste => (
-        <div key={paste.date}>
-          <details>
-            <summary>{paste.title}</summary>
-            <p>{paste.content}</p>
-            <p>
-              {`${paste.author} `}
-              {paste.date}
-            </p>
-          </details>
-        </div>
+        <ControlledAccordions paste={paste} />
+        // <div key={paste.date}>
+        //   <details>
+        //     <summary>{paste.title}</summary>
+        //     <p>{paste.content}</p>
+        //     <p>
+        //       {`${paste.author} `}
+        //       {paste.date}
+        //     </p>
+        //   </details>
+        // </div>
       ))}
     </div>
   );
