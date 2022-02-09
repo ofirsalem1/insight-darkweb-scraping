@@ -28,7 +28,7 @@ export default function ControlledAccordions({ paste }: { paste: Paste }) {
         </AccordionSummary>
         <AccordionDetails>
           <Typography sx={{ 'word-break': 'keep-all', 'word-wrap': 'break-word' }}>
-            {paste.content}{' '}
+            {paste.content}
           </Typography>
         </AccordionDetails>
       </Accordion>
