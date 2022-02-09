@@ -5,7 +5,6 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Paste } from '../types/details.types';
-import { PasswordTwoTone } from '@mui/icons-material';
 
 export default function ControlledAccordions({ paste }: { paste: Paste }) {
   const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -21,13 +20,16 @@ export default function ControlledAccordions({ paste }: { paste: Paste }) {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
+          sx={{ background: 'rgba(10, 70, 200, 0.5)' }}
         >
           <Typography sx={{ width: '33%', flexShrink: 0 }}>{paste.title}</Typography>
           <Typography sx={{ color: 'text.secondary' }}>{paste.author}</Typography>
           <Typography sx={{ margin: '0 auto' }}>{paste.date}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>{paste.content} </Typography>
+          <Typography sx={{ 'word-break': 'keep-all', 'word-wrap': 'break-word' }}>
+            {paste.content}{' '}
+          </Typography>
         </AccordionDetails>
       </Accordion>
     </div>

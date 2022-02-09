@@ -24,18 +24,10 @@ const Details = () => {
   return (
     <div>
       <h2>Details</h2>
-      {pastes.map(paste => (
-        <ControlledAccordions paste={paste} />
-        // <div key={paste.date}>
-        //   <details>
-        //     <summary>{paste.title}</summary>
-        //     <p>{paste.content}</p>
-        //     <p>
-        //       {`${paste.author} `}
-        //       {paste.date}
-        //     </p>
-        //   </details>
-        // </div>
+      {pastes.map((paste, i) => (
+        <div className="paste-div" key={i}>
+          <ControlledAccordions paste={paste} />
+        </div>
       ))}
     </div>
   );
