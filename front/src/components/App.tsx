@@ -14,8 +14,6 @@ function App() {
       const events = new EventSource('http://localhost:8080/get-data');
       events.onmessage = event => {
         const pastes = JSON.parse(event.data);
-        console.log(pastes);
-
         for (const paste of pastes) {
           const pasteObj = {
             title: paste.title,
