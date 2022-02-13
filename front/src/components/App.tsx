@@ -7,6 +7,34 @@ import PrimarySearchAppBar from './PrimarySearchAppBar';
 function App() {
   const [pastes, setPastes] = useState<Paste[] | []>([]);
   const [filteredPastes, setFilteredPastes] = useState<Paste[] | []>([]);
+
+  const [listening, setListening] = useState(false);
+  useEffect(() => {
+    if (!listening) {
+      const events = new EventSource('http://localhost:8080/get-data');
+      events.onmessage = event => {
+        const pastes = JSON.parse(event.data);
+        console.log(pastes);
+
+        for (const paste of pastes) {
+          const pasteObj = {
+            title: paste.title,
+            author: paste.author,
+            content: paste.content,
+            date: paste.date,
+          };
+          setPastes(pastes => [...pastes, pasteObj]);
+          setFilteredPastes(pastes => [...pastes, pasteObj]);
+        }
+      };
+      events.onerror = e => {
+        console.log('error', e);
+        events.close();
+      };
+      setListening(true);
+    }
+  }, [listening, pastes]);
+
   // useEffect(() => {
   //   getData();
   // }, []);
@@ -26,32 +54,6 @@ function App() {
   //   setPastes(response.data);
   //   setFilteredPastes(response.data);
   // };
-
-  const [listening, setListening] = useState(false);
-  useEffect(() => {
-    if (!listening) {
-      const events = new EventSource('http://localhost:8080/get-data');
-      events.onmessage = event => {
-        const pastes = JSON.parse(event.data);
-        console.log(pastes);
-        for (const paste of pastes) {
-          const pasteObj = {
-            title: paste.title,
-            author: paste.author,
-            content: paste.content,
-            date: paste.date,
-          };
-          setPastes(pastes => [...pastes, pasteObj]);
-          setFilteredPastes(pastes => [...pastes, pasteObj]);
-        }
-      };
-      events.onerror = e => {
-        console.log('error', e);
-        events.close();
-      };
-      setListening(true);
-    }
-  }, [listening, pastes]);
 
   return (
     <div className="App">

@@ -1,6 +1,6 @@
 const Paste = require('../db/models/Paste');
 
-const clients = [];
+// const clients = [];
 
 const getData = async (req, res) => {
   try {
@@ -11,11 +11,17 @@ const getData = async (req, res) => {
     };
     res.writeHead(200, headers); // for sse connection
 
-    const allPaste = await Paste.find({});
+    let allPaste = await Paste.find({});
     const data = `data: ${JSON.stringify(allPaste)}\n\n`;
     res.write(data);
-    // res.send(allPaste);
 
+    setInterval(async () => {
+      const allPasteUpdate = await Paste.find({});
+      if (allPaste.length !== allPasteUpdate.length) {
+        allPaste = allPasteUpdate;
+        res.write(`data: ${JSON.stringify(allPasteUpdate)}\n\n`);
+      }
+    }, 120000);
     // const newUser = res;
     // clients.push(newUser);
     // remove client from array when they disconnect

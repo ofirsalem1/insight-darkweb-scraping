@@ -22,7 +22,7 @@ mongoose
     console.log('error connecting to MongoDB:', err);
   });
 
-// setInterval(() => insertData(), 120000);
+setInterval(() => insertData(), 120000);
 
 app.get('/', async (req, res) => {
   res.send('response');
