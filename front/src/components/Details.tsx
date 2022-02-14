@@ -22,6 +22,7 @@ const Details = ({ pastes }: { pastes: Paste[] }) => {
       <h2>Details</h2>
       {/*if the data is not loaded yet, show loader*/}
       {!pastes.length && <span className="loader">Load&nbsp;ng</span>}
+
       {currentPastes
         .sort((a, b) => +new Date(b.date) - +new Date(a.date)) // sort by date
         .map((paste, i) => (
@@ -29,11 +30,13 @@ const Details = ({ pastes }: { pastes: Paste[] }) => {
             <ControlledAccordions paste={paste} />
           </div>
         ))}
-      <PaginationComponent
-        productsPerPage={pastesPerPage}
-        totalProducts={pastes.length}
-        paginate={paginate}
-      />
+      {pastes.length && (
+        <PaginationComponent
+          pastesPerPage={pastesPerPage}
+          totalPastes={pastes.length}
+          paginate={paginate}
+        />
+      )}
     </div>
   );
 };

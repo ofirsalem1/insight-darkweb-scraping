@@ -2,8 +2,8 @@ import '../styles/paginationComponent.css';
 import Pagination from '@mui/material/Pagination';
 // import { PaginationComponentProps } from '../../types/PaginationComponent.types';
 
-const PaginationComponent = ({ productsPerPage, totalProducts, paginate }: any) => {
-  const pageNumbers = Math.ceil(totalProducts / productsPerPage); // total number of page
+const PaginationComponent = ({ pastesPerPage, totalPastes, paginate }: any) => {
+  const pageNumbers = Math.ceil(totalPastes / pastesPerPage); // total number of page
   return (
     <div className="pagination-div">
       <Pagination
