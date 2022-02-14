@@ -17,3 +17,7 @@
     transform: rotate(360deg);
   }
 }
+.fa-arrow-alt-circle-up {
+  /* scroll up button*/
+  font-size: 4rem;
+}

@@ -2,9 +2,11 @@ import { Paste } from '../types/details.types';
 import ControlledAccordions from './ControlledAccordions';
 import '../styles/details.css';
 import PaginationComponent from './PaginationComponent';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import ScrollToTop from 'react-scroll-up';
 
 const Details = ({ pastes }: { pastes: Paste[] }) => {
+  const scrollUpBtn = useRef<any>();
   const [currentPage, setCurrentPage] = useState(1);
   const [pastesPerPage] = useState(20);
 
@@ -14,7 +16,7 @@ const Details = ({ pastes }: { pastes: Paste[] }) => {
 
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber); // change the current page
-    // scrollUpBtn.current.click(); // click on the scroll up
+    scrollUpBtn.current.click(); // click on the scroll up
   };
 
   return (
@@ -35,6 +37,9 @@ const Details = ({ pastes }: { pastes: Paste[] }) => {
           paginate={paginate}
         />
       )}
+      <ScrollToTop showUnder={160}>
+        <i ref={scrollUpBtn} className="far fa-arrow-alt-circle-up"></i>
+      </ScrollToTop>
     </div>
   );
 };
