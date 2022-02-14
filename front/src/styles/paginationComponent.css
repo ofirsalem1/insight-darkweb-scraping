@@ -1,0 +1,9 @@
+/* pagination-div */
+.pagination-div > nav > ul {
+  justify-content: space-between;
+}
+.pagination-div {
+  width: 40%;
+  margin: 2rem auto;
+}
+/* pagination-div */
