@@ -21,7 +21,7 @@ const Details = ({ pastes }: { pastes: Paste[] }) => {
     <div>
       <h2>Details</h2>
       {/*if the data is not loaded yet, show loader*/}
-      {!pastes.length && <span className="loader">Load&nbsp;ng</span>}
+      {!pastes.length && <span className="loader"></span>}
 
       {currentPastes.map((paste, i) => (
         <div className="paste-div" key={i}>
