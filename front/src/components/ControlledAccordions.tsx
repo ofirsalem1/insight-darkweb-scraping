@@ -5,6 +5,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Paste } from '../types/details.types';
+import moment from 'moment';
 
 export default function ControlledAccordions({ paste }: { paste: Paste }) {
   const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -24,7 +25,7 @@ export default function ControlledAccordions({ paste }: { paste: Paste }) {
         >
           <Typography sx={{ width: '33%', flexShrink: 0 }}>{paste.title}</Typography>
           <Typography sx={{ color: 'text.secondary' }}>{paste.author}</Typography>
-          <Typography sx={{ margin: '0 auto' }}>{paste.date}</Typography>
+          <Typography sx={{ margin: '0 auto' }}>{moment(paste.date).format('llll')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>{paste.content}</Typography>

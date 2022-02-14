@@ -11,12 +11,12 @@ const getData = async (req, res) => {
     };
     res.writeHead(200, headers); // for sse connection
 
-    let allPaste = await Paste.find({});
+    let allPaste = await Paste.find({}).sort('-date'); // all the pastes sorted by date
     const data = `data: ${JSON.stringify(allPaste)}\n\n`;
     res.write(data);
 
     setInterval(async () => {
-      const allPasteUpdate = await Paste.find({});
+      const allPasteUpdate = await Paste.find({}).sort('-date');
       if (allPaste.length !== allPasteUpdate.length) {
         allPaste = allPasteUpdate;
         res.write(`data: ${JSON.stringify(allPasteUpdate)}\n\n`);
