@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Details from './Details';
-import axios from 'axios';
 import { Paste } from '../types/details.types';
 import PrimarySearchAppBar from './PrimarySearchAppBar';
 
@@ -14,16 +13,8 @@ function App() {
       const events = new EventSource('http://localhost:8080/get-data');
       events.onmessage = event => {
         const pastes = JSON.parse(event.data);
-        for (const paste of pastes) {
-          const pasteObj = {
-            title: paste.title,
-            author: paste.author,
-            content: paste.content,
-            date: paste.date,
-          };
-          setPastes(pastes => [...pastes, pasteObj]);
-          setFilteredPastes(pastes => [...pastes, pasteObj]);
-        }
+        setPastes(pastes);
+        setFilteredPastes(pastes);
       };
       events.onerror = e => {
         console.log('error', e);
