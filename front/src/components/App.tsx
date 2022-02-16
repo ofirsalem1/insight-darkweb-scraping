@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import Details from './Details';
 import { Paste } from '../types/details.types';
 import PrimarySearchAppBar from './PrimarySearchAppBar';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Analysis from './Analysis';
 
 function App() {
   const [pastes, setPastes] = useState<Paste[] | []>([]);
@@ -45,11 +47,16 @@ function App() {
   // };
 
   return (
-    <div className="App">
-      <PrimarySearchAppBar pastes={pastes} setFilteredPastes={setFilteredPastes} />
-      <h1>SCRAPING</h1>
-      <Details pastes={filteredPastes} />
-    </div>
+    <Router>
+      <div className="App">
+        <PrimarySearchAppBar pastes={pastes} setFilteredPastes={setFilteredPastes} />
+        <h1>SCRAPING</h1>
+        <Routes>
+          <Route path="/" element={<Details pastes={filteredPastes} />} />
+          <Route path="/analysis" element={<Analysis />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
