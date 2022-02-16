@@ -53,7 +53,7 @@ function App() {
         <h1>SCRAPING</h1>
         <Routes>
           <Route path="/" element={<Details pastes={filteredPastes} />} />
-          <Route path="/analysis" element={<Analysis />} />
+          <Route path="/analysis" element={<Analysis pastes={pastes} />} />
         </Routes>
       </div>
     </Router>
