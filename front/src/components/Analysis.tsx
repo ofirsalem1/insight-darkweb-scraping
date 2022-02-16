@@ -6,24 +6,15 @@ import { Paste } from '../types/details.types';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Analysis = ({ pastes }: { pastes: Paste[] }) => {
-  const pornTitleNumber = pastes.filter(paste => {
-    return paste.title.toLowerCase().includes('porn');
-  }).length;
-  const bitcoinTitleNumber = pastes.filter(paste => {
-    return paste.title.toLowerCase().includes('bitcoin');
-  }).length;
-  const drugTitleNumber = pastes.filter(paste => {
-    return paste.title.toLowerCase().includes('drug');
-  }).length;
-  const hackerTitleNumber = pastes.filter(paste => {
-    return paste.title.toLowerCase().includes('hacker');
-  }).length;
-  const orgyTitleNumber = pastes.filter(paste => {
-    return paste.title.toLowerCase().includes('orgy');
-  }).length;
-  const spywareTitleNumber = pastes.filter(paste => {
-    return paste.title.toLowerCase().includes('spyware');
-  }).length;
+  const wordsObj = { porn: 0, bitcoin: 0, drug: 0, hacker: 0, orgy: 0, spyware: 0 };
+  for (const paste of pastes) {
+    if (paste.title.toLowerCase().includes('porn')) wordsObj.porn++;
+    if (paste.title.toLowerCase().includes('bitcoin')) wordsObj.bitcoin++;
+    if (paste.title.toLowerCase().includes('drug')) wordsObj.drug++;
+    if (paste.title.toLowerCase().includes('hacker')) wordsObj.hacker++;
+    if (paste.title.toLowerCase().includes('orgy')) wordsObj.orgy++;
+    if (paste.title.toLowerCase().includes('spyware')) wordsObj.spyware++;
+  }
 
   const data = {
     labels: ['Porn', 'Bitcoin', 'Drug', 'Hacker', 'Orgy', 'Spyware'],
@@ -31,12 +22,12 @@ const Analysis = ({ pastes }: { pastes: Paste[] }) => {
       {
         label: '# of Votes',
         data: [
-          pornTitleNumber,
-          bitcoinTitleNumber,
-          drugTitleNumber,
-          hackerTitleNumber,
-          orgyTitleNumber,
-          spywareTitleNumber,
+          wordsObj.porn,
+          wordsObj.bitcoin,
+          wordsObj.drug,
+          wordsObj.hacker,
+          wordsObj.orgy,
+          wordsObj.spyware,
         ],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
