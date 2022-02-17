@@ -16,6 +16,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { log } from 'console';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -166,6 +168,39 @@ export default function PrimarySearchAppBar({
     </Menu>
   );
 
+  /*********************** navigate open menu ************************* */
+  const pages = ['Home', 'Analysis'];
+  // const [navigateAnchorEl, setNavigateAnchorEl] = React.useState<null | HTMLElement>(null);
+  // const isNavigateMenuOpen = Boolean(navigateAnchorEl);
+  const [isNavigateMenuOpen, setIsNavigateMenuOpen] = React.useState<boolean>(false);
+
+  const navigate = useNavigate();
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setIsNavigateMenuOpen(true);
+  };
+
+  const handleClose = (e: any) => {
+    setIsNavigateMenuOpen(false);
+    navigate(`/${e.target.innerText}`);
+  };
+
+  const renderNavigateMenu = (
+    <Menu
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'left',
+      }}
+      open={isNavigateMenuOpen}
+      onClick={handleClose}
+    >
+      {pages.map(page => (
+        <MenuItem key={page} onClick={handleClose}>
+          {page}
+        </MenuItem>
+      ))}
+    </Menu>
+  );
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -176,6 +211,7 @@ export default function PrimarySearchAppBar({
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
+            onClick={handleClick}
           >
             <MenuIcon />
           </IconButton>
@@ -185,7 +221,7 @@ export default function PrimarySearchAppBar({
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            User Name
+            Hello Guest
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -237,8 +273,9 @@ export default function PrimarySearchAppBar({
           </Box>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+      {/* {renderMobileMenu} */}
+      {/* {renderMenu} */}
+      {renderNavigateMenu}
     </Box>
   );
 }
