@@ -6,28 +6,37 @@ import { Paste } from '../types/details.types';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Analysis = ({ pastes }: { pastes: Paste[] }) => {
-  const wordsObj = { porn: 0, bitcoin: 0, drug: 0, hacker: 0, orgy: 0, spyware: 0 };
+  const wordsTitleObj = { porn: 0, bitcoin: 0, drug: 0, hacker: 0, orgy: 0, spyware: 0 };
   for (const paste of pastes) {
-    if (paste.title.toLowerCase().includes('porn')) wordsObj.porn++;
-    if (paste.title.toLowerCase().includes('bitcoin')) wordsObj.bitcoin++;
-    if (paste.title.toLowerCase().includes('drug')) wordsObj.drug++;
-    if (paste.title.toLowerCase().includes('hacker')) wordsObj.hacker++;
-    if (paste.title.toLowerCase().includes('orgy')) wordsObj.orgy++;
-    if (paste.title.toLowerCase().includes('spyware')) wordsObj.spyware++;
+    if (paste.title.toLowerCase().includes('porn')) wordsTitleObj.porn++;
+    if (paste.title.toLowerCase().includes('bitcoin')) wordsTitleObj.bitcoin++;
+    if (paste.title.toLowerCase().includes('drug')) wordsTitleObj.drug++;
+    if (paste.title.toLowerCase().includes('hacker')) wordsTitleObj.hacker++;
+    if (paste.title.toLowerCase().includes('orgy')) wordsTitleObj.orgy++;
+    if (paste.title.toLowerCase().includes('spyware')) wordsTitleObj.spyware++;
+  }
+  const wordsContentsObj = { porn: 0, bitcoin: 0, drug: 0, hacker: 0, orgy: 0, spyware: 0 };
+  for (const paste of pastes) {
+    if (paste.content.toLowerCase().includes('porn')) wordsContentsObj.porn++;
+    if (paste.content.toLowerCase().includes('bitcoin')) wordsContentsObj.bitcoin++;
+    if (paste.content.toLowerCase().includes('drug')) wordsContentsObj.drug++;
+    if (paste.content.toLowerCase().includes('hacker')) wordsContentsObj.hacker++;
+    if (paste.content.toLowerCase().includes('orgy')) wordsContentsObj.orgy++;
+    if (paste.content.toLowerCase().includes('spyware')) wordsContentsObj.spyware++;
   }
 
-  const data = {
+  const dataTitles = {
     labels: ['Porn', 'Bitcoin', 'Drug', 'Hacker', 'Orgy', 'Spyware'],
     datasets: [
       {
         label: '# of Votes',
         data: [
-          wordsObj.porn,
-          wordsObj.bitcoin,
-          wordsObj.drug,
-          wordsObj.hacker,
-          wordsObj.orgy,
-          wordsObj.spyware,
+          wordsTitleObj.porn,
+          wordsTitleObj.bitcoin,
+          wordsTitleObj.drug,
+          wordsTitleObj.hacker,
+          wordsTitleObj.orgy,
+          wordsTitleObj.spyware,
         ],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
@@ -49,10 +58,51 @@ const Analysis = ({ pastes }: { pastes: Paste[] }) => {
       },
     ],
   };
+  const dataContents = {
+    labels: ['Porn', 'Bitcoin', 'Drug', 'Hacker', 'Orgy', 'Spyware'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [
+          wordsContentsObj.porn,
+          wordsContentsObj.bitcoin,
+          wordsContentsObj.drug,
+          wordsContentsObj.hacker,
+          wordsContentsObj.orgy,
+          wordsContentsObj.spyware,
+        ],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
   return (
     <div>
       <div className="pie-chart">
-        <Pie data={data} />
+        <div>
+          <h3>Title - {Object.values(wordsTitleObj).reduce((a, b) => a + b)}</h3>
+          <Pie data={dataTitles} />
+        </div>
+        <div>
+          <h3>Content - {Object.values(wordsContentsObj).reduce((a, b) => a + b)}</h3>
+          <Pie data={dataContents} />
+        </div>
       </div>
     </div>
   );
