@@ -1,6 +1,7 @@
 body {
   text-align: center;
   background: rgba(75, 78, 76, 0.267);
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .paste-div {

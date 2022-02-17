@@ -1,8 +1,9 @@
 .pie-chart {
-  width: 40vw;
-  margin: 0 auto;
+  /* width: 30vw; */
+  /* margin: 0 auto; */
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 canvas {
   margin: 0 4rem;
