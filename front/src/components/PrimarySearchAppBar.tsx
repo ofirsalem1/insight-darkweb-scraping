@@ -16,8 +16,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { log } from 'console';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -80,6 +79,7 @@ export default function PrimarySearchAppBar({
     });
     setFilteredPastes(filteredPastes);
   };
+  /* filter the pastes */
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -170,59 +170,67 @@ export default function PrimarySearchAppBar({
 
   /*********************** navigate open menu ************************* */
   const pages = ['Home', 'Analysis'];
-  // const [navigateAnchorEl, setNavigateAnchorEl] = React.useState<null | HTMLElement>(null);
-  // const isNavigateMenuOpen = Boolean(navigateAnchorEl);
-  const [isNavigateMenuOpen, setIsNavigateMenuOpen] = React.useState<boolean>(false);
+  const [navigateAnchorEl, setNavigateAnchorEl] = React.useState<null | HTMLElement>(null);
+  const isNavigateMenuOpen = Boolean(navigateAnchorEl);
 
   const navigate = useNavigate();
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setIsNavigateMenuOpen(true);
+  const navigateMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setNavigateAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (e: any) => {
-    setIsNavigateMenuOpen(false);
+  const navigateMenuClose = (e: any) => {
+    setNavigateAnchorEl(null);
     navigate(`/${e.target.innerText}`);
   };
 
   const renderNavigateMenu = (
     <Menu
+      anchorEl={navigateAnchorEl}
       anchorOrigin={{
         vertical: 'top',
         horizontal: 'left',
       }}
       open={isNavigateMenuOpen}
-      onClick={handleClose}
+      onClick={navigateMenuClose}
     >
       {pages.map(page => (
-        <MenuItem key={page} onClick={handleClose}>
+        <MenuItem key={page} onClick={navigateMenuClose}>
           {page}
         </MenuItem>
       ))}
     </Menu>
   );
+  /*********************** navigate open menu ************************* */
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
+          {/* navigate open menu */}
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
-            onClick={handleClick}
+            onClick={navigateMenuOpen}
           >
             <MenuIcon />
           </IconButton>
+          {/* navigate open menu */}
+
+          {/* show user name on the search bar */}
           <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            Hello Guest
+            User Name
           </Typography>
+          {/* show user name on the search bar */}
+
+          {/* The search input */}
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -235,6 +243,8 @@ export default function PrimarySearchAppBar({
               }
             />
           </Search>
+          {/* The search input */}
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -273,8 +283,8 @@ export default function PrimarySearchAppBar({
           </Box>
         </Toolbar>
       </AppBar>
-      {/* {renderMobileMenu} */}
-      {/* {renderMenu} */}
+      {renderMobileMenu}
+      {renderMenu}
       {renderNavigateMenu}
     </Box>
   );
