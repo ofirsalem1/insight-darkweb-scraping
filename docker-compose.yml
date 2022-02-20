@@ -1,0 +1,12 @@
+version: '3'
+services:
+  scraping-front:
+    image: scraping-front:latest
+    ports:
+      - 3000:3000
+  scraping-back:
+    image: scraping-back:latest
+    ports:
+      - 8080:8080
+  # dperson-torproxy:
+  #   image: dperson/torproxy:latest
